@@ -1,36 +1,43 @@
 # 🎬 Cine-RAG: Context-Aware Movie Recommendation Engine
 
-![Python](https://img.shields.io/badge/Python-3.10%2B-blue) ![LangChain](https://img.shields.io/badge/LangChain-v0.1-green) ![ChromaDB](https://img.shields.io/badge/Vector%20DB-ChromaDB-orange) ![Hugging Face](https://img.shields.io/badge/Model-Zephyr--7B-yellow) ![Gradio](https://img.shields.io/badge/UI-Gradio-purple)
+![Python](https://img.shields.io/badge/Python-3.10%2B-blue) ![LangChain](https://img.shields.io/badge/LangChain-v0.1-green) ![ChromaDB](https://img.shields.io/badge/Vector%20DB-ChromaDB-orange) ![Hugging Face](https://img.shields.io/badge/Model-Zephyr--7B-yellow) ![Gradio](https://img.shields.io/badge/UI-Gradio-purple) [![Kaggle](https://kaggle.com/static/images/open-in-kaggle.svg)](https://www.kaggle.com/code/mohammed237/movies-recommendation-chatbot-rag/edit)
+
+---
 
 **Cine-RAG** is an advanced Retrieval-Augmented Generation (RAG) system that revolutionizes movie recommendations by understanding semantic intent rather than relying on simple keyword matching. Unlike traditional recommendation systems that depend on user viewing history, Cine-RAG leverages a **Vector Database** to comprehend natural language queries such as:
 
-- *"Dystopian movies where teenagers fight to the death"*
-- *"Action movies released after 2022 with high ratings"*
-- *"Psychological thrillers with unreliable narrators"*
+- _"Dystopian movies where teenagers fight to the death"_
+- _"Action movies released after 2022 with high ratings"_
+- _"Psychological thrillers with unreliable narrators"_
 
 ---
 
 ## 🚀 Key Features
 
 ### 🧠 Semantic Understanding
+
 - Utilizes `all-MiniLM-L6-v2` embeddings to capture the "essence" of your request beyond simple keyword matching
 - Understands context, themes, and narrative elements in natural language
 
 ### 🔍 Hybrid Filtering
+
 - Combines vector similarity search with metadata filtering
 - Support for complex queries like: `Year > 2023 AND Genre = Action AND Rating > 7.5`
 
 ### ⚡ Privacy-First Local LLM
+
 - Runs **4-bit quantized Zephyr-7B-Beta** locally on Tesla T4 GPU
 - No data sent to external APIs
 - Completely free and privacy-preserving
 
 ### 🛡️ Anti-Hallucination Architecture
+
 - Implements strict "Evidence-Based Reasoning" prompts
 - Prevents model from fabricating non-existent movies
 - Chain-of-Thought prompting ensures factual accuracy
 
 ### 🎯 Smart Retrieval
+
 - Uses **Maximum Marginal Relevance (MMR)** algorithm
 - Ensures diverse, non-redundant recommendations
 - Balances relevance with variety
@@ -39,15 +46,15 @@
 
 ## 🛠️ Tech Stack
 
-| Component | Technology |
-|-----------|-----------|
-| **Orchestration** | LangChain |
-| **Vector Database** | ChromaDB |
-| **LLM** | HuggingFace Zephyr-7B-Beta (4-bit quantized) |
-| **Embeddings** | sentence-transformers/all-MiniLM-L6-v2 |
-| **Data Processing** | Pandas (1M+ rows → 27K curated entries) |
-| **Frontend** | Gradio |
-| **Quantization** | bitsandbytes |
+| Component           | Technology                                   |
+| ------------------- | -------------------------------------------- |
+| **Orchestration**   | LangChain                                    |
+| **Vector Database** | ChromaDB                                     |
+| **LLM**             | HuggingFace Zephyr-7B-Beta (4-bit quantized) |
+| **Embeddings**      | sentence-transformers/all-MiniLM-L6-v2       |
+| **Data Processing** | Pandas (1M+ rows → 27K curated entries)      |
+| **Frontend**        | Gradio                                       |
+| **Quantization**    | bitsandbytes                                 |
 
 ---
 
@@ -69,14 +76,17 @@ graph LR
 ### Pipeline Breakdown
 
 1. **Data Ingestion**
+
    - Loads curated dataset of 27,000+ movies with metadata and plot summaries
    - Each movie includes: title, genre, year, rating, plot, and more
 
 2. **Vector Embedding**
+
    - Text descriptions converted into 384-dimensional vectors
    - Stored in ChromaDB for lightning-fast similarity search
 
 3. **Intelligent Retrieval**
+
    - Detects temporal filters (e.g., "after 2020")
    - Extracts genre preferences
    - Retrieves top 4 most relevant movies using MMR
@@ -90,32 +100,33 @@ graph LR
 
 ## 💻 Installation & Setup
 
-This project is optimized for **Kaggle** (free Tesla T4 GPU) or local machines with NVIDIA GPUs (12GB+ VRAM recommended).
+### Option A: Run on Kaggle (Recommended)
 
-### Prerequisites
+You can run this project completely free on a Tesla T4 GPU using Kaggle Kernels.
+[**open Notebook**](https://www.kaggle.com/code/mohammed237/movies-recommendation-chatbot-rag)
+
+### Option B: Local Installation
+
+**Prerequisites**
 
 - Python 3.10+
 - NVIDIA GPU with 12GB+ VRAM (for local deployment)
 - CUDA 11.8+ and cuDNN
 
-**OR**
-
-- Run on Kaggle using the `chatbot.ipynb` notebook with included datasets and requirements file
-
-### 1. Clone the Repository
+1. Clone the Repository
 
 ```bash
 git clone https://github.com/Mohammed2372/Movies-Recommendation-Chatbot-RAG.git
 cd Movies-Recommendation-Chatbot-RAG
 ```
 
-### 2. Install Dependencies
+2. Install Dependencies
 
 ```bash
 pip install -r requirements.txt
 ```
 
-### 3. Run Chatbot
+3. Run Chatbot
 
 Run all cells in [chatbot.ipynb](chatbot.ipynb) notebook. A frontend UI is available for interactive testing.
 
@@ -124,6 +135,7 @@ Run all cells in [chatbot.ipynb](chatbot.ipynb) notebook. A frontend UI is avail
 ## 🧠 Engineering Challenges & Solutions
 
 ### Challenge 1: Hallucination Control
+
 **Problem:** The 7B model would fabricate details, claiming a 2023 movie was released in 2021 or inventing non-existent films.
 
 **Solution:** Implemented Chain-of-Thought (CoT) prompting that forces the model to explicitly state evidence before making claims.
@@ -131,6 +143,7 @@ Run all cells in [chatbot.ipynb](chatbot.ipynb) notebook. A frontend UI is avail
 ---
 
 ### Challenge 2: Dataset Quality
+
 **Problem:** Raw TMDB dataset contained 1M+ entries, including unreleased clips, duplicate entries, and low-quality productions.
 
 **Solution:** Engineered robust Pandas pipeline with filters (`vote_count > 50`, `status == 'Released'`, deduplication) resulting in 27,000 high-quality movies.
@@ -138,6 +151,7 @@ Run all cells in [chatbot.ipynb](chatbot.ipynb) notebook. A frontend UI is avail
 ---
 
 ### Challenge 3: Retrieval Diversity
+
 **Problem:** Vector search would return very similar movies (e.g., all Marvel films for "superhero" query).
 
 **Solution:** Implemented Maximum Marginal Relevance (MMR) to balance relevance with diversity across different sub-genres.
@@ -147,6 +161,7 @@ Run all cells in [chatbot.ipynb](chatbot.ipynb) notebook. A frontend UI is avail
 ## 🎯 Usage Examples
 
 ### Example 1: Thematic Query
+
 ```
 User: "Movies about artificial intelligence gaining consciousness"
 
@@ -155,12 +170,13 @@ Based on your query, here are recommendations:
 
 1. **Ex Machina** (2014) - Drama/Sci-Fi
    A programmer is selected to evaluate the human qualities of a breathtaking AI.
-   
+
 2. **Her** (2013) - Romance/Sci-Fi
    A lonely writer develops an unlikely relationship with an operating system...
 ```
 
 ### Example 2: Filtered Query
+
 ```
 User: "Action movies from 2023 with ratings above 8"
 
@@ -173,7 +189,6 @@ Here are high-rated action films from 2023:
 
 ---
 
-
 ## 🙏 Acknowledgments
 
 - **TMDB** for the movie dataset
@@ -182,7 +197,7 @@ Here are high-rated action films from 2023:
 - **ChromaDB** for the vector database
 - **Kaggle** for free GPU resources and datasets
 - **Datasets**
-   - [tmdb-movie-metadata](https://www.kaggle.com/datasets/tmdb/tmdb-movie-metadata)
-   - [tmdb-movies-dataset-2023-930k-movies](https://www.kaggle.com/datasets/asaniczka/tmdb-movies-dataset-2023-930k-movies)
+  - [tmdb-movie-metadata](https://www.kaggle.com/datasets/tmdb/tmdb-movie-metadata)
+  - [tmdb-movies-dataset-2023-930k-movies](https://www.kaggle.com/datasets/asaniczka/tmdb-movies-dataset-2023-930k-movies)
 
 ---
