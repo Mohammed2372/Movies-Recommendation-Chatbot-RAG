@@ -2,6 +2,9 @@
 
 ![Python](https://img.shields.io/badge/Python-3.10%2B-blue) ![LangChain](https://img.shields.io/badge/LangChain-v0.1-green) ![ChromaDB](https://img.shields.io/badge/Vector%20DB-ChromaDB-orange) ![Hugging Face](https://img.shields.io/badge/Model-Zephyr--7B-yellow) ![Gradio](https://img.shields.io/badge/UI-Gradio-purple) [![Kaggle](https://kaggle.com/static/images/open-in-kaggle.svg)](https://www.kaggle.com/code/mohammed237/movies-recommendation-chatbot-rag/edit)
 
+## Project Demo
+![Demo](demo/MoviesRecommendationRAGDemo.gif)
+
 ---
 
 **Cine-RAG** is an advanced Retrieval-Augmented Generation (RAG) system that revolutionizes movie recommendations by understanding semantic intent rather than relying on simple keyword matching. Unlike traditional recommendation systems that depend on user viewing history, Cine-RAG leverages a **Vector Database** to comprehend natural language queries such as:
